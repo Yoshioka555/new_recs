@@ -11,13 +11,20 @@ class EditMyPage extends StatefulWidget {
   final String group;
   final String grade;
   final String userImage;
-  const EditMyPage({Key? key, required this.name, required this.group, required this.grade, required this.userImage}) : super(key:key);
+
+  const EditMyPage(
+      {Key? key,
+      required this.name,
+      required this.group,
+      required this.grade,
+      required this.userImage})
+      : super(key: key);
+
   @override
   _EditMyPageState createState() => _EditMyPageState();
 }
 
 class _EditMyPageState extends State<EditMyPage> {
-
   late TextEditingController _nameController;
   late TextEditingController _groupController;
   late TextEditingController _gradeController;
@@ -42,7 +49,8 @@ class _EditMyPageState extends State<EditMyPage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.lightGreen,
-          title: const Text('アカウント情報変更',
+          title: const Text(
+            'アカウント情報変更',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -56,14 +64,15 @@ class _EditMyPageState extends State<EditMyPage> {
           ),
         ),
         body: Consumer<EditMyPageModel>(builder: (context, model, child) {
-
           return Stack(
             children: [
               Center(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 850),
                         child: SizedBox(
@@ -78,34 +87,38 @@ class _EditMyPageState extends State<EditMyPage> {
                             child: CircleAvatar(
                               backgroundColor: Colors.grey,
                               radius: 50,
-                              backgroundImage: imageData != null ?
-                              Image.memory(
-                                imageData!,
-                                fit: BoxFit.cover,
-                                errorBuilder: (c, o, s) {
-                                  return const Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                  );
-                                },
-                              ).image
-                                  : _userImageController.text != '' ?
-                              Image.memory(
-                                base64Decode(_userImageController.text),
-                                fit: BoxFit.cover,
-                                errorBuilder: (c, o, s) {
-                                  return const Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                  );
-                                },
-                              ).image
-                                  : const AssetImage('assets/images/default.png'),
+                              backgroundImage: imageData != null
+                                  ? Image.memory(
+                                      imageData!,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (c, o, s) {
+                                        return const Icon(
+                                          Icons.error,
+                                          color: Colors.red,
+                                        );
+                                      },
+                                    ).image
+                                  : _userImageController.text != ''
+                                      ? Image.memory(
+                                          base64Decode(
+                                              _userImageController.text),
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (c, o, s) {
+                                            return const Icon(
+                                              Icons.error,
+                                              color: Colors.red,
+                                            );
+                                          },
+                                        ).image
+                                      : const AssetImage(
+                                          'assets/images/default.png'),
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 850),
                         child: SizedBox(
@@ -115,7 +128,9 @@ class _EditMyPageState extends State<EditMyPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       ConstrainedBox(
                         constraints: const BoxConstraints(
                           maxWidth: 850,
@@ -131,7 +146,9 @@ class _EditMyPageState extends State<EditMyPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20,),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Text(
                         '選択した班：${_groupController.text}',
                         style: const TextStyle(
@@ -257,8 +274,7 @@ class _EditMyPageState extends State<EditMyPage> {
                             setState(() {
                               _gradeController.text = text!;
                             });
-                          }
-                      ),
+                          }),
                       const SizedBox(
                         height: 16,
                       ),
@@ -271,25 +287,27 @@ class _EditMyPageState extends State<EditMyPage> {
                             onPressed: () async {
                               model.startLoading();
                               try {
-                                await model.update(_nameController.text, _groupController.text, _gradeController.text);
+                                await model.update(
+                                    _nameController.text,
+                                    _groupController.text,
+                                    _gradeController.text);
 
                                 if (imageData != null) {
                                   await model.updateImage(imageData);
                                 }
                                 //ユーザー登録
                                 Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) {
-                                        return const Footer(pageNumber: 3);
-                                      }
-                                  ),
+                                  MaterialPageRoute(builder: (context) {
+                                    return const Footer(pageNumber: 3);
+                                  }),
                                 );
                               } catch (error) {
                                 final snackBar = SnackBar(
                                   backgroundColor: Colors.red,
                                   content: Text(error.toString()),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
                               } finally {
                                 model.endLoading();
                               }
@@ -308,6 +326,7 @@ class _EditMyPageState extends State<EditMyPage> {
       ),
     );
   }
+
   @override
   void dispose() {
     _nameController.dispose();

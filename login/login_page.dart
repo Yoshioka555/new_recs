@@ -20,16 +20,16 @@ class LoginPage extends StatelessWidget {
       child: PopScope(
        canPop: false,
         child: Scaffold(
-          backgroundColor: Colors.white,
+          //backgroundColor: Colors.white,
           appBar: AppBar(
             title: const Text(
                 'Labmaid(ログイン)',
                 style: TextStyle(
-                  color: Colors.white,
+                  //color: Colors.white,
                 ),
             ),
             automaticallyImplyLeading: false,
-            backgroundColor: Colors.black,
+            //backgroundColor: Colors.black,
           ),
           body: Consumer<LoginModel>(builder: (context, model, child) {
               return Stack(

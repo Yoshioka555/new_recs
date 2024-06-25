@@ -13,7 +13,6 @@ class EventIndexPage extends StatefulWidget {
 
   const EventIndexPage({Key? key}) : super(key: key);
 
-
   @override
   _EventIndexPageState createState() => _EventIndexPageState();
 }
@@ -445,7 +444,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
                             view: CalendarView.month,
                             controller: _controller,
                             cellEndPadding: 0,
-                            headerDateFormat: 'yyyy年MM月',
+                            headerDateFormat: 'yyyy年 MM月',
                             showNavigationArrow: true,
                             onViewChanged: viewChanged,
                             headerStyle: _headerStyle,
@@ -547,7 +546,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
                               view: CalendarView.week,
                               controller: _controllerWeek,
                               cellEndPadding: 0,
-                              headerDateFormat: 'yyyy年　MM月',
+                              headerDateFormat: 'yyyy年 MM月',
                               showNavigationArrow: true,
                               onViewChanged: viewChanged,
                               headerStyle: _headerStyle,
@@ -610,7 +609,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
                             view: CalendarView.day,
                             controller: _controllerDay,
                             cellEndPadding: 0,
-                            headerDateFormat: 'yyyy年　MM月',
+                            headerDateFormat: 'yyyy年 MM月',
                             showNavigationArrow: true,
                             onViewChanged: viewChanged,
                             headerStyle: _headerStyle,
@@ -843,7 +842,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
                 view: view,
                 controller: _controller,
                 cellEndPadding: 0,
-                headerDateFormat: 'yyyy年　MM月',
+                headerDateFormat: 'yyyy年 MM月',
                 showNavigationArrow: true,
                 onViewChanged: viewChanged,
                 headerStyle: _headerStyle,
