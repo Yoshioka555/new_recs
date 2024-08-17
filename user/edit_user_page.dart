@@ -48,19 +48,14 @@ class _EditMyPageState extends State<EditMyPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.lightGreen,
           title: const Text(
             'アカウント情報変更',
-            style: TextStyle(
-              color: Colors.white,
-            ),
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.of(context).pop();
             },
-            color: Colors.white,
           ),
         ),
         body: Consumer<EditMyPageModel>(builder: (context, model, child) {
@@ -86,7 +81,7 @@ class _EditMyPageState extends State<EditMyPage> {
                             },
                             child: CircleAvatar(
                               backgroundColor: Colors.grey,
-                              radius: 50,
+                              radius: 100,
                               backgroundImage: imageData != null
                                   ? Image.memory(
                                       imageData!,
@@ -111,7 +106,7 @@ class _EditMyPageState extends State<EditMyPage> {
                                           },
                                         ).image
                                       : const AssetImage(
-                                          'assets/images/default.png'),
+                                          'assets/images/anger_cat.JPG'),
                             ),
                           ),
                         ),

@@ -374,6 +374,8 @@ class _AttendanceManagementPage extends State<AttendanceManagementPage> {
   }
 
 
+
+
   Color _attendanceColor(String text){
     if (text == '一時退席'){
       return Colors.yellow;

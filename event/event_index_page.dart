@@ -6,17 +6,16 @@ import 'package:labmaidfastapi/event/event_create_page.dart';
 import 'package:labmaidfastapi/event/event_update_page.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:provider/provider.dart';
+import '../gemini/gemini_page.dart';
 import '../header_footer_drawer/drawer.dart';
 import 'event_index_model.dart';
 
 class EventIndexPage extends StatefulWidget {
-
   const EventIndexPage({Key? key}) : super(key: key);
 
   @override
   _EventIndexPageState createState() => _EventIndexPageState();
 }
-
 
 class _EventIndexPageState extends State<EventIndexPage> {
   final CalendarController _controller = CalendarController();
@@ -29,7 +28,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
   DateTime today = DateTime.now();
 
   CalendarHeaderStyle headerStyle(DateTime date) {
-    if(date.month == 1) {
+    if (date.month == 1) {
       return const CalendarHeaderStyle(
         textAlign: TextAlign.center,
         backgroundColor: Colors.blue,
@@ -77,7 +76,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
           fontWeight: FontWeight.w500,
         ),
       );
-    } else if(date.month == 5) {
+    } else if (date.month == 5) {
       return CalendarHeaderStyle(
         textAlign: TextAlign.center,
         backgroundColor: Colors.lightGreenAccent.shade700,
@@ -89,7 +88,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
           fontWeight: FontWeight.w500,
         ),
       );
-    } else if(date.month == 6) {
+    } else if (date.month == 6) {
       return const CalendarHeaderStyle(
         textAlign: TextAlign.center,
         backgroundColor: Colors.amber,
@@ -101,7 +100,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
           fontWeight: FontWeight.w500,
         ),
       );
-    } else if(date.month == 7) {
+    } else if (date.month == 7) {
       return const CalendarHeaderStyle(
         textAlign: TextAlign.center,
         backgroundColor: Colors.orange,
@@ -159,8 +158,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
             letterSpacing: 5,
             color: Colors.white,
             fontWeight: FontWeight.w500,
-          )
-      );
+          ));
     } else {
       return const CalendarHeaderStyle(
           textAlign: TextAlign.center,
@@ -171,13 +169,16 @@ class _EventIndexPageState extends State<EventIndexPage> {
             letterSpacing: 5,
             color: Colors.white,
             fontWeight: FontWeight.w500,
-          )
-      );
+          ));
     }
   }
 
   void _goToToday() {
-    _controller.displayDate = DateTime(today.year, today.month, 1,);
+    _controller.displayDate = DateTime(
+      today.year,
+      today.month,
+      1,
+    );
   }
 
   void _goToSelectedYearMonth(int year, int month) {
@@ -186,9 +187,12 @@ class _EventIndexPageState extends State<EventIndexPage> {
 
   @override
   void initState() {
-    _controller.displayDate = DateTime(today.year, today.month, 1, 0,0,0,0,0);
-    _controllerWeek.displayDate = DateTime(today.year, today.month, today.day, 0, 0, 0, 0);
-    _controllerDay.displayDate = DateTime(today.year, today.month, today.day,0,0,0,0);
+    _controller.displayDate =
+        DateTime(today.year, today.month, 1, 0, 0, 0, 0, 0);
+    _controllerWeek.displayDate =
+        DateTime(today.year, today.month, today.day, 0, 0, 0, 0);
+    _controllerDay.displayDate =
+        DateTime(today.year, today.month, today.day, 0, 0, 0, 0);
     _headerStyle = headerStyle(DateTime.now());
     super.initState();
   }
@@ -203,7 +207,8 @@ class _EventIndexPageState extends State<EventIndexPage> {
     SchedulerBinding.instance.addPersistentFrameCallback((duration) {
       if (!mounted) return; // ウィジェットがマウントされているか確認
       if (_isDisposed) return; // フラグをチェック
-      var midDate = viewChangedDetails.visibleDates[viewChangedDetails.visibleDates.length ~/ 2];
+      var midDate = viewChangedDetails
+          .visibleDates[viewChangedDetails.visibleDates.length ~/ 2];
       setState(() {
         _headerStyle = headerStyle(midDate);
       });
@@ -215,292 +220,314 @@ class _EventIndexPageState extends State<EventIndexPage> {
     return DefaultTabController(
       length: 3,
       child: ChangeNotifierProvider<EventIndexModel>(
-          create: (_) => EventIndexModel()..fetchEvent(),
-          child:  Scaffold(
-            backgroundColor: Colors.white,
-            appBar: AppBar(
-              toolbarHeight: 50.0,
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: IconButton(
-                    icon: const Icon(Icons.timer),
-                    onPressed: () async {
-
-                    }
-                  ),
+        create: (_) => EventIndexModel()..fetchEvent(),
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            toolbarHeight: 50.0,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                  icon: const Icon(Icons.psychology_alt),
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const GeminiPage()),
+                    );
+                  },
                 ),
-              ],
-              backgroundColor: Colors.purple[200],
-              iconTheme: const IconThemeData(
+              ),
+            ],
+            backgroundColor: Colors.green[100],
+            /*
+            iconTheme: const IconThemeData(
+              color: Colors.white,
+            ),
+            */
+            centerTitle: true,
+            elevation: 0.0,
+            title: const Text(
+              'Event Page',
+              /*
+              style: TextStyle(
                 color: Colors.white,
               ),
-              centerTitle: true,
-              elevation: 0.0,
-              title: const Text('Event Page',
-                style: TextStyle(
-                  color: Colors.white,
+              */
+            ),
+            bottom: const TabBar(
+              tabs: <Tab>[
+                Tab(
+                  text: 'Month',
                 ),
-              ),
-              bottom: const TabBar(
-                tabs: <Tab>[
-                  Tab(text: 'Month',),
-                  Tab(text: 'Week',),
-                  Tab(text: 'Day',),
-                ],
-              ),
+                Tab(
+                  text: 'Week',
+                ),
+                Tab(
+                  text: 'Day',
+                ),
+              ],
             ),
-            drawer: const UserDrawer(),
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: Colors.amber
-              ,
-              onPressed: () async {
-                //画面遷移
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CreateEventPage(),
-                    fullscreenDialog: true,
-                  ),
-                );
-              },
-              child: const Icon(
-                Icons.add,
-                color: Colors.black,
-              ),
+          ),
+          drawer: const UserDrawer(),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.amber,
+            onPressed: () async {
+              //画面遷移
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CreateEventPage(),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
+            child: const Icon(
+              Icons.add,
+              color: Colors.black,
             ),
-
-            body: TabBarView(
-              children: [
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: SizedBox(
-                          height: 50,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      _goToToday();
-                                    },
-                                    child: const Text('今日'),
-                                  ),
+          ),
+          body: TabBarView(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: SizedBox(
+                        height: 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    _goToToday();
+                                  },
+                                  child: const Text('今日'),
                                 ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: DropdownButton(
-                                      value: selectedYear,
-                                      items: const [
-                                        DropdownMenuItem(
-                                          value: 2020,
-                                          child: Text('2020年'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2021,
-                                          child: Text('2021年'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2022,
-                                          child: Text('2022年'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2023,
-                                          child: Text('2023年'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2024,
-                                          child: Text('2024年'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2025,
-                                          child: Text('2025年'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2026,
-                                          child: Text('2026年'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2027,
-                                          child: Text('2027年'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2028,
-                                          child: Text('2028年'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2029,
-                                          child: Text('2029年'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2030,
-                                          child: Text('2030年'),
-                                        ),
-                                      ],
-                                      onChanged: (text) {
-                                        setState(() {
-                                          selectedYear = text!;
-                                        });
-                                      }
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: DropdownButton(
-                                      value: selectedMonth,
-                                      items: const [
-                                        DropdownMenuItem(
-                                          value: 1,
-                                          child: Text('1月'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2,
-                                          child: Text('2月'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 3,
-                                          child: Text('3月'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 4,
-                                          child: Text('4月'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 5,
-                                          child: Text('5月'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 6,
-                                          child: Text('6月'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 7,
-                                          child: Text('7月'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 8,
-                                          child: Text('8月'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 9,
-                                          child: Text('9月'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 10,
-                                          child: Text('10月'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 11,
-                                          child: Text('11月'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 12,
-                                          child: Text('12月'),
-                                        ),
-                                      ],
-                                      onChanged: (text) {
-                                        setState(() {
-                                          selectedMonth = text!;
-                                        });
-                                      }
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      _goToSelectedYearMonth(selectedYear, selectedMonth);
-                                    },
-                                    child: const Text('移動'),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Consumer<EventIndexModel>(builder: (context, model, child) {
-                        return SizedBox(
-                          height: 1800,
-                          child: SfCalendar(
-                            onLongPress: (CalendarLongPressDetails details) {
-
-                            },
-                            onTap: (CalendarTapDetails details) {
-
-                            },
-                            dataSource: EventDataSource(model.events),
-                            view: CalendarView.month,
-                            controller: _controller,
-                            cellEndPadding: 0,
-                            headerDateFormat: 'yyyy年 MM月',
-                            showNavigationArrow: true,
-                            onViewChanged: viewChanged,
-                            headerStyle: _headerStyle,
-                            viewHeaderStyle: ViewHeaderStyle(
-                              backgroundColor: _headerStyle.backgroundColor,
-                              dayTextStyle: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
                               ),
                             ),
-                            todayHighlightColor: Colors.white,
-                            appointmentBuilder: (BuildContext context,
-                                CalendarAppointmentDetails details) {
-                              final EventData appointment = details.appointments.first;
-                              return GestureDetector(
-                                onTap: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          UpdateEventPage(event: appointment,content: titleToContent(appointment.title),),
-                                      fullscreenDialog: true,
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: _isTitleToColorBox(appointment.title, appointment.unit),
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                      color: _isTitleToColorBorder(appointment.title, appointment.unit),
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 2.0),
-                                    child: Text(displayTitle(appointment.title, appointment.unit, appointment.start),
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: DropdownButton(
+                                    value: selectedYear,
+                                    items: const [
+                                      DropdownMenuItem(
+                                        value: 2020,
+                                        child: Text('2020年'),
                                       ),
+                                      DropdownMenuItem(
+                                        value: 2021,
+                                        child: Text('2021年'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 2022,
+                                        child: Text('2022年'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 2023,
+                                        child: Text('2023年'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 2024,
+                                        child: Text('2024年'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 2025,
+                                        child: Text('2025年'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 2026,
+                                        child: Text('2026年'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 2027,
+                                        child: Text('2027年'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 2028,
+                                        child: Text('2028年'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 2029,
+                                        child: Text('2029年'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 2030,
+                                        child: Text('2030年'),
+                                      ),
+                                    ],
+                                    onChanged: (text) {
+                                      setState(() {
+                                        selectedYear = text!;
+                                      });
+                                    }),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: DropdownButton(
+                                    value: selectedMonth,
+                                    items: const [
+                                      DropdownMenuItem(
+                                        value: 1,
+                                        child: Text('1月'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 2,
+                                        child: Text('2月'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 3,
+                                        child: Text('3月'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 4,
+                                        child: Text('4月'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 5,
+                                        child: Text('5月'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 6,
+                                        child: Text('6月'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 7,
+                                        child: Text('7月'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 8,
+                                        child: Text('8月'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 9,
+                                        child: Text('9月'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 10,
+                                        child: Text('10月'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 11,
+                                        child: Text('11月'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 12,
+                                        child: Text('12月'),
+                                      ),
+                                    ],
+                                    onChanged: (text) {
+                                      setState(() {
+                                        selectedMonth = text!;
+                                      });
+                                    }),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    _goToSelectedYearMonth(
+                                        selectedYear, selectedMonth);
+                                  },
+                                  child: const Text('移動'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Consumer<EventIndexModel>(builder: (context, model, child) {
+                      return SizedBox(
+                        height: 1800,
+                        child: SfCalendar(
+                          onLongPress: (CalendarLongPressDetails details) {},
+                          onTap: (CalendarTapDetails details) {},
+                          dataSource: EventDataSource(model.events),
+                          view: CalendarView.month,
+                          controller: _controller,
+                          cellEndPadding: 0,
+                          headerDateFormat: 'yyyy年 MM月',
+                          showNavigationArrow: true,
+                          onViewChanged: viewChanged,
+                          headerStyle: _headerStyle,
+                          viewHeaderStyle: ViewHeaderStyle(
+                            backgroundColor: _headerStyle.backgroundColor,
+                            dayTextStyle: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                          todayHighlightColor: Colors.white,
+                          appointmentBuilder: (BuildContext context,
+                              CalendarAppointmentDetails details) {
+                            final EventData appointment =
+                                details.appointments.first;
+                            return GestureDetector(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UpdateEventPage(
+                                      event: appointment,
+                                      content:
+                                          titleToContent(appointment.title),
+                                    ),
+                                    fullscreenDialog: true,
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: _isTitleToColorBox(
+                                      appointment.title, appointment.unit),
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(
+                                    color: _isTitleToColorBorder(
+                                        appointment.title, appointment.unit),
+                                    width: 1.0,
+                                  ),
+                                ),
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 2.0),
+                                  child: Text(
+                                    displayTitle(appointment.title,
+                                        appointment.unit, appointment.start),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
                                     ),
                                   ),
                                 ),
-                              );
-                            },
-                            monthCellBuilder: (BuildContext context, MonthCellDetails details) {
-                              return Container(
-                                alignment: Alignment.topCenter,
-                                decoration: BoxDecoration(
-                                    color: _getCellColor(details.date),
-                                    border: Border.all(color: Colors.grey, width: 0.2)
-                                ),
-                                child: DateTime(details.date.year, details.date.month, details.date.day) == DateTime(today.year, today.month, today.day)
-                                    ? Container(
+                              ),
+                            );
+                          },
+                          monthCellBuilder:
+                              (BuildContext context, MonthCellDetails details) {
+                            return Container(
+                              alignment: Alignment.topCenter,
+                              decoration: BoxDecoration(
+                                  color: _getCellColor(details.date),
+                                  border: Border.all(
+                                      color: Colors.grey, width: 0.2)),
+                              child: DateTime(
+                                          details.date.year,
+                                          details.date.month,
+                                          details.date.day) ==
+                                      DateTime(
+                                          today.year, today.month, today.day)
+                                  ? Container(
                                       decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.indigo,
@@ -510,163 +537,190 @@ class _EventIndexPageState extends State<EventIndexPage> {
                                       alignment: Alignment.center,
                                       child: Text(
                                         details.date.day.toString(),
-                                        style: const TextStyle(color: Colors.white),
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                       ),
-                                      )
-                                    : Text(
-                                        details.date.day.toString(),
-                                        style: TextStyle(color: _getTextColor(details.date)),
-                                      ),
-                              );
-                            },
-                            monthViewSettings: const MonthViewSettings(
-                              numberOfWeeksInView: 6, // 表示する週の数
-                              agendaItemHeight: 40,
-                              appointmentDisplayCount: 7,
-                              showAgenda: true,
-                              appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
-                              monthCellStyle: MonthCellStyle(
-                                backgroundColor: Colors.white,
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Consumer<EventIndexModel>(builder: (context, model, child) {
-                        return SizedBox(
-                          height: 1100,
-                          child: SfCalendar(
-                              dataSource: EventDataSource(model.events),
-                              view: CalendarView.week,
-                              controller: _controllerWeek,
-                              cellEndPadding: 0,
-                              headerDateFormat: 'yyyy年 MM月',
-                              showNavigationArrow: true,
-                              onViewChanged: viewChanged,
-                              headerStyle: _headerStyle,
-                              viewHeaderStyle: ViewHeaderStyle(
-                                backgroundColor: _headerStyle.backgroundColor,
-                                dayTextStyle: const TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              todayHighlightColor: Colors.indigo,
-                              appointmentBuilder: (BuildContext context,
-                                  CalendarAppointmentDetails details) {
-                                    final EventData appointment = details.appointments.first;
-                                    final bool isTimeslotAppointment = _isTimeslotAppointmentView(
-                                      appointment, _controllerWeek.view);
-                                    final bool isStartAppointment = !isTimeslotAppointment &&
-                                      _isStartOfAppointmentView(appointment, details.date);
-                                    final bool isEndAppointment = !isTimeslotAppointment &&
-                                      _isEndOfAppointmentView(
-                                        appointment, details.date, _controllerWeek.view);
-                                    return Container(
-                                      margin: EdgeInsets.fromLTRB(isStartAppointment ? 0 : 0, 0,
-                                      isEndAppointment ? 0 : 0, 0),
-                                      decoration: BoxDecoration(
-                                        color: _isTitleToColorBox(appointment.title, appointment.unit),
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(
-                                          color: _isTitleToColorBorder(appointment.title, appointment.unit),
-                                          width: 1.0,
-                                        ),
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 2.0),
-                                        child: Text(displayTitle(appointment.title, appointment.unit, appointment.start),
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 13,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                            },
-
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Consumer<EventIndexModel>(builder: (context, model, child) {
-                        return SizedBox(
-                          height: 1100,
-                          child: SfCalendar(
-                            dataSource: EventDataSource(model.events),
-                            view: CalendarView.day,
-                            controller: _controllerDay,
-                            cellEndPadding: 0,
-                            headerDateFormat: 'yyyy年 MM月',
-                            showNavigationArrow: true,
-                            onViewChanged: viewChanged,
-                            headerStyle: _headerStyle,
-                            viewHeaderStyle: ViewHeaderStyle(
-                              backgroundColor: _headerStyle.backgroundColor,
-                              dayTextStyle: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                              ),
-                            ),
-                            todayHighlightColor: Colors.indigo,
-                            appointmentBuilder: (BuildContext context,
-                                CalendarAppointmentDetails details) {
-                              final EventData appointment = details.appointments.first;
-                              final bool isTimeslotAppointment = _isTimeslotAppointmentView(
-                                  appointment, _controllerDay.view);
-                              final bool isStartAppointment = !isTimeslotAppointment &&
-                                  _isStartOfAppointmentView(appointment, details.date);
-                              final bool isEndAppointment = !isTimeslotAppointment &&
-                                  _isEndOfAppointmentView(
-                                      appointment, details.date, _controllerDay.view);
-                              return Container(
-                                margin: EdgeInsets.fromLTRB(isStartAppointment ? 0 : 0, 0,
-                                    isEndAppointment ? 0 : 0, 0),
-                                decoration: BoxDecoration(
-                                  color: _isTitleToColorBox(appointment.title, appointment.unit),
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    color: _isTitleToColorBorder(appointment.title, appointment.unit),
-                                    width: 1.0,
-                                  ),
-                                ),
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 2.0),
-                                  child: Text(displayTitle(appointment.title, appointment.unit, appointment.start),
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13,
+                                    )
+                                  : Text(
+                                      details.date.day.toString(),
+                                      style: TextStyle(
+                                          color: _getTextColor(details.date)),
                                     ),
+                            );
+                          },
+                          monthViewSettings: const MonthViewSettings(
+                            numberOfWeeksInView: 6,
+                            // 表示する週の数
+                            agendaItemHeight: 40,
+                            appointmentDisplayCount: 7,
+                            showAgenda: true,
+                            appointmentDisplayMode:
+                                MonthAppointmentDisplayMode.appointment,
+                            monthCellStyle: MonthCellStyle(
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Consumer<EventIndexModel>(builder: (context, model, child) {
+                      return SizedBox(
+                        height: 1100,
+                        child: SfCalendar(
+                          dataSource: EventDataSource(model.events),
+                          view: CalendarView.week,
+                          controller: _controllerWeek,
+                          cellEndPadding: 0,
+                          headerDateFormat: 'yyyy年 MM月',
+                          showNavigationArrow: true,
+                          onViewChanged: viewChanged,
+                          headerStyle: _headerStyle,
+                          viewHeaderStyle: ViewHeaderStyle(
+                            backgroundColor: _headerStyle.backgroundColor,
+                            dayTextStyle: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                          todayHighlightColor: Colors.indigo,
+                          appointmentBuilder: (BuildContext context,
+                              CalendarAppointmentDetails details) {
+                            final EventData appointment =
+                                details.appointments.first;
+                            final bool isTimeslotAppointment =
+                                _isTimeslotAppointmentView(
+                                    appointment, _controllerWeek.view);
+                            final bool isStartAppointment =
+                                !isTimeslotAppointment &&
+                                    _isStartOfAppointmentView(
+                                        appointment, details.date);
+                            final bool isEndAppointment =
+                                !isTimeslotAppointment &&
+                                    _isEndOfAppointmentView(appointment,
+                                        details.date, _controllerWeek.view);
+                            return Container(
+                              margin: EdgeInsets.fromLTRB(
+                                  isStartAppointment ? 0 : 0,
+                                  0,
+                                  isEndAppointment ? 0 : 0,
+                                  0),
+                              decoration: BoxDecoration(
+                                color: _isTitleToColorBox(
+                                    appointment.title, appointment.unit),
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  color: _isTitleToColorBorder(
+                                      appointment.title, appointment.unit),
+                                  width: 1.0,
+                                ),
+                              ),
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 2.0),
+                                child: Text(
+                                  displayTitle(appointment.title,
+                                      appointment.unit, appointment.start),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 13,
                                   ),
                                 ),
-                              );
-                            },
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Consumer<EventIndexModel>(builder: (context, model, child) {
+                      return SizedBox(
+                        height: 1100,
+                        child: SfCalendar(
+                          dataSource: EventDataSource(model.events),
+                          view: CalendarView.day,
+                          controller: _controllerDay,
+                          cellEndPadding: 0,
+                          headerDateFormat: 'yyyy年 MM月',
+                          showNavigationArrow: true,
+                          onViewChanged: viewChanged,
+                          headerStyle: _headerStyle,
+                          viewHeaderStyle: ViewHeaderStyle(
+                            backgroundColor: _headerStyle.backgroundColor,
+                            dayTextStyle: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                          todayHighlightColor: Colors.indigo,
+                          appointmentBuilder: (BuildContext context,
+                              CalendarAppointmentDetails details) {
+                            final EventData appointment =
+                                details.appointments.first;
+                            final bool isTimeslotAppointment =
+                                _isTimeslotAppointmentView(
+                                    appointment, _controllerDay.view);
+                            final bool isStartAppointment =
+                                !isTimeslotAppointment &&
+                                    _isStartOfAppointmentView(
+                                        appointment, details.date);
+                            final bool isEndAppointment =
+                                !isTimeslotAppointment &&
+                                    _isEndOfAppointmentView(appointment,
+                                        details.date, _controllerDay.view);
+                            return Container(
+                              margin: EdgeInsets.fromLTRB(
+                                  isStartAppointment ? 0 : 0,
+                                  0,
+                                  isEndAppointment ? 0 : 0,
+                                  0),
+                              decoration: BoxDecoration(
+                                color: _isTitleToColorBox(
+                                    appointment.title, appointment.unit),
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  color: _isTitleToColorBorder(
+                                      appointment.title, appointment.unit),
+                                  width: 1.0,
+                                ),
+                              ),
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 2.0),
+                                child: Text(
+                                  displayTitle(appointment.title,
+                                      appointment.unit, appointment.start),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+              ),
+            ],
           ),
+        ),
       ),
     );
   }
-  
+
   String titleToContent(String title) {
     if (title == 'ミーティング' || title == '輪講') {
       return title;
@@ -675,7 +729,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
     }
   }
 
-  Widget calendarChange (CalendarView view) {
+  Widget calendarChange(CalendarView view) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -752,8 +806,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
                             setState(() {
                               selectedYear = text!;
                             });
-                          }
-                      ),
+                          }),
                     ),
                   ),
                   Expanded(
@@ -815,8 +868,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
                             setState(() {
                               selectedMonth = text!;
                             });
-                          }
-                      ),
+                          }),
                     ),
                   ),
                   Expanded(
@@ -861,11 +913,11 @@ class _EventIndexPageState extends State<EventIndexPage> {
                                 ],
 
                                      */
-                appointmentBuilder: (BuildContext context,
-                    CalendarAppointmentDetails details) {
+                appointmentBuilder:
+                    (BuildContext context, CalendarAppointmentDetails details) {
                   final EventData appointment = details.appointments.first;
-                  final bool isTimeslotAppointment = _isTimeslotAppointmentView(
-                      appointment, _controller.view);
+                  final bool isTimeslotAppointment =
+                      _isTimeslotAppointmentView(appointment, _controller.view);
                   final bool isStartAppointment = !isTimeslotAppointment &&
                       _isStartOfAppointmentView(appointment, details.date);
                   final bool isEndAppointment = !isTimeslotAppointment &&
@@ -875,17 +927,21 @@ class _EventIndexPageState extends State<EventIndexPage> {
                     margin: EdgeInsets.fromLTRB(isStartAppointment ? 0 : 0, 0,
                         isEndAppointment ? 0 : 0, 0),
                     decoration: BoxDecoration(
-                      color: _isTitleToColorBox(appointment.title, appointment.unit),
+                      color: _isTitleToColorBox(
+                          appointment.title, appointment.unit),
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(
-                        color: _isTitleToColorBorder(appointment.title, appointment.unit),
+                        color: _isTitleToColorBorder(
+                            appointment.title, appointment.unit),
                         width: 1.0,
                       ),
                     ),
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 2.0),
-                      child: Text(displayTitle(appointment.title, appointment.unit, appointment.start),
+                      child: Text(
+                        displayTitle(appointment.title, appointment.unit,
+                            appointment.start),
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 13,
@@ -894,38 +950,44 @@ class _EventIndexPageState extends State<EventIndexPage> {
                     ),
                   );
                 },
-                monthCellBuilder: (BuildContext context, MonthCellDetails details) {
+                monthCellBuilder:
+                    (BuildContext context, MonthCellDetails details) {
                   return Container(
                     alignment: Alignment.topCenter,
                     decoration: BoxDecoration(
                         color: _getCellColor(details.date),
-                        border: Border.all(color: Colors.grey, width: 0.2)
-                    ),
-                    child: DateTime(details.date.year, details.date.month, details.date.day) == DateTime(today.year, today.month, today.day)
+                        border: Border.all(color: Colors.grey, width: 0.2)),
+                    child: DateTime(details.date.year, details.date.month,
+                                details.date.day) ==
+                            DateTime(today.year, today.month, today.day)
                         ? Container(
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.indigo,
-                      ),
-                      height: 25,
-                      width: 25,
-                      alignment: Alignment.center,
-                      child: Text(
-                        details.date.day.toString(),
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    )
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.indigo,
+                            ),
+                            height: 25,
+                            width: 25,
+                            alignment: Alignment.center,
+                            child: Text(
+                              details.date.day.toString(),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          )
                         : Text(
-                      details.date.day.toString(),
-                      style: TextStyle(color: _getTextColor(details.date)),
-                    ),
+                            details.date.day.toString(),
+                            style:
+                                TextStyle(color: _getTextColor(details.date)),
+                          ),
                   );
                 },
                 monthViewSettings: const MonthViewSettings(
-                  numberOfWeeksInView: 6, // 表示する週の数
+                  numberOfWeeksInView: 6,
+                  // 表示する週の数
                   agendaItemHeight: 10,
-                  appointmentDisplayCount: 5, // 表示するアポイントメントの最大数
-                  appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
+                  appointmentDisplayCount: 5,
+                  // 表示するアポイントメントの最大数
+                  appointmentDisplayMode:
+                      MonthAppointmentDisplayMode.appointment,
                   monthCellStyle: MonthCellStyle(
                     backgroundColor: Colors.white,
                   ),
@@ -948,175 +1010,177 @@ class _EventIndexPageState extends State<EventIndexPage> {
 
   ///祝日(手打ち)
   List<DateTime> holidays = [
-    DateTime(2022,01,01),
-    DateTime(2022,01,10),
-    DateTime(2022,02,11),
-    DateTime(2022,02,23),
-    DateTime(2022,03,21),
-    DateTime(2022,04,29),
-    DateTime(2022,05,03),
-    DateTime(2022,05,04),
-    DateTime(2022,05,05),
-    DateTime(2022,07,18),
-    DateTime(2022,08,11),
-    DateTime(2022,09,19),
-    DateTime(2022,09,23),
-    DateTime(2022,10,10),
-    DateTime(2022,11,03),
-    DateTime(2022,11,23),
-    DateTime(2023,01,01),
-    DateTime(2023,01,02),
-    DateTime(2023,01,09),
-    DateTime(2023,02,11),
-    DateTime(2023,02,23),
-    DateTime(2023,03,21),
-    DateTime(2023,04,29),
-    DateTime(2023,05,03),
-    DateTime(2023,05,04),
-    DateTime(2023,05,05),
-    DateTime(2023,07,17),
-    DateTime(2023,08,11),
-    DateTime(2023,09,18),
-    DateTime(2023,09,23),
-    DateTime(2023,10,09),
-    DateTime(2023,11,03),
-    DateTime(2023,11,23),
-    DateTime(2024,01,01),
-    DateTime(2024,01,08),
-    DateTime(2024,02,11),
-    DateTime(2024,02,12),
-    DateTime(2024,02,23),
-    DateTime(2024,03,20),
-    DateTime(2024,04,29),
-    DateTime(2024,05,03),
-    DateTime(2024,05,04),
-    DateTime(2024,05,05),
-    DateTime(2024,05,06),
-    DateTime(2024,07,15),
-    DateTime(2024,08,11),
-    DateTime(2024,09,16),
-    DateTime(2024,09,22),
-    DateTime(2024,09,23),
-    DateTime(2024,10,14),
-    DateTime(2024,11,03),
-    DateTime(2024,11,23),
-    DateTime(2025,01,01),
-    DateTime(2025,01,13),
-    DateTime(2025,02,11),
-    DateTime(2025,02,23),
-    DateTime(2025,03,20),
-    DateTime(2025,04,29),
-    DateTime(2025,05,03),
-    DateTime(2025,05,04),
-    DateTime(2025,05,05),
-    DateTime(2025,05,06),
-    DateTime(2025,07,21),
-    DateTime(2025,08,11),
-    DateTime(2025,09,15),
-    DateTime(2025,09,23),
-    DateTime(2025,10,13),
-    DateTime(2025,11,03),
-    DateTime(2025,11,23),
-    DateTime(2025,11,24),
-    DateTime(2026,01,01),
-    DateTime(2026,01,12),
-    DateTime(2026,02,11),
-    DateTime(2026,02,23),
-    DateTime(2026,03,20),
-    DateTime(2026,04,29),
-    DateTime(2026,05,03),
-    DateTime(2026,05,04),
-    DateTime(2026,05,05),
-    DateTime(2026,05,06),
-    DateTime(2026,07,20),
-    DateTime(2026,08,11),
-    DateTime(2026,09,21),
-    DateTime(2026,09,22),
-    DateTime(2026,09,23),
-    DateTime(2026,10,12),
-    DateTime(2026,11,03),
-    DateTime(2026,11,23),
-    DateTime(2027,01,01),
-    DateTime(2027,01,11),
-    DateTime(2027,02,11),
-    DateTime(2027,02,23),
-    DateTime(2027,03,21),
-    DateTime(2027,03,22),
-    DateTime(2027,04,29),
-    DateTime(2027,05,03),
-    DateTime(2027,05,04),
-    DateTime(2027,05,05),
-    DateTime(2027,07,19),
-    DateTime(2027,08,11),
-    DateTime(2027,09,20),
-    DateTime(2027,09,23),
-    DateTime(2027,10,11),
-    DateTime(2027,11,03),
-    DateTime(2027,11,23),
+    DateTime(2022, 01, 01),
+    DateTime(2022, 01, 10),
+    DateTime(2022, 02, 11),
+    DateTime(2022, 02, 23),
+    DateTime(2022, 03, 21),
+    DateTime(2022, 04, 29),
+    DateTime(2022, 05, 03),
+    DateTime(2022, 05, 04),
+    DateTime(2022, 05, 05),
+    DateTime(2022, 07, 18),
+    DateTime(2022, 08, 11),
+    DateTime(2022, 09, 19),
+    DateTime(2022, 09, 23),
+    DateTime(2022, 10, 10),
+    DateTime(2022, 11, 03),
+    DateTime(2022, 11, 23),
+    DateTime(2023, 01, 01),
+    DateTime(2023, 01, 02),
+    DateTime(2023, 01, 09),
+    DateTime(2023, 02, 11),
+    DateTime(2023, 02, 23),
+    DateTime(2023, 03, 21),
+    DateTime(2023, 04, 29),
+    DateTime(2023, 05, 03),
+    DateTime(2023, 05, 04),
+    DateTime(2023, 05, 05),
+    DateTime(2023, 07, 17),
+    DateTime(2023, 08, 11),
+    DateTime(2023, 09, 18),
+    DateTime(2023, 09, 23),
+    DateTime(2023, 10, 09),
+    DateTime(2023, 11, 03),
+    DateTime(2023, 11, 23),
+    DateTime(2024, 01, 01),
+    DateTime(2024, 01, 08),
+    DateTime(2024, 02, 11),
+    DateTime(2024, 02, 12),
+    DateTime(2024, 02, 23),
+    DateTime(2024, 03, 20),
+    DateTime(2024, 04, 29),
+    DateTime(2024, 05, 03),
+    DateTime(2024, 05, 04),
+    DateTime(2024, 05, 05),
+    DateTime(2024, 05, 06),
+    DateTime(2024, 07, 15),
+    DateTime(2024, 08, 11),
+    DateTime(2024, 09, 16),
+    DateTime(2024, 09, 22),
+    DateTime(2024, 09, 23),
+    DateTime(2024, 10, 14),
+    DateTime(2024, 11, 03),
+    DateTime(2024, 11, 23),
+    DateTime(2025, 01, 01),
+    DateTime(2025, 01, 13),
+    DateTime(2025, 02, 11),
+    DateTime(2025, 02, 23),
+    DateTime(2025, 03, 20),
+    DateTime(2025, 04, 29),
+    DateTime(2025, 05, 03),
+    DateTime(2025, 05, 04),
+    DateTime(2025, 05, 05),
+    DateTime(2025, 05, 06),
+    DateTime(2025, 07, 21),
+    DateTime(2025, 08, 11),
+    DateTime(2025, 09, 15),
+    DateTime(2025, 09, 23),
+    DateTime(2025, 10, 13),
+    DateTime(2025, 11, 03),
+    DateTime(2025, 11, 23),
+    DateTime(2025, 11, 24),
+    DateTime(2026, 01, 01),
+    DateTime(2026, 01, 12),
+    DateTime(2026, 02, 11),
+    DateTime(2026, 02, 23),
+    DateTime(2026, 03, 20),
+    DateTime(2026, 04, 29),
+    DateTime(2026, 05, 03),
+    DateTime(2026, 05, 04),
+    DateTime(2026, 05, 05),
+    DateTime(2026, 05, 06),
+    DateTime(2026, 07, 20),
+    DateTime(2026, 08, 11),
+    DateTime(2026, 09, 21),
+    DateTime(2026, 09, 22),
+    DateTime(2026, 09, 23),
+    DateTime(2026, 10, 12),
+    DateTime(2026, 11, 03),
+    DateTime(2026, 11, 23),
+    DateTime(2027, 01, 01),
+    DateTime(2027, 01, 11),
+    DateTime(2027, 02, 11),
+    DateTime(2027, 02, 23),
+    DateTime(2027, 03, 21),
+    DateTime(2027, 03, 22),
+    DateTime(2027, 04, 29),
+    DateTime(2027, 05, 03),
+    DateTime(2027, 05, 04),
+    DateTime(2027, 05, 05),
+    DateTime(2027, 07, 19),
+    DateTime(2027, 08, 11),
+    DateTime(2027, 09, 20),
+    DateTime(2027, 09, 23),
+    DateTime(2027, 10, 11),
+    DateTime(2027, 11, 03),
+    DateTime(2027, 11, 23),
     DateTime(2028, 1, 1),
-    DateTime(2028, 1,10),
-    DateTime(2028, 2,11),
-    DateTime(2028, 2,23),
-    DateTime(2028, 3,20),
-    DateTime(2028, 4,29),
+    DateTime(2028, 1, 10),
+    DateTime(2028, 2, 11),
+    DateTime(2028, 2, 23),
+    DateTime(2028, 3, 20),
+    DateTime(2028, 4, 29),
     DateTime(2028, 5, 3),
     DateTime(2028, 5, 4),
     DateTime(2028, 5, 5),
-    DateTime(2028, 7,17),
-    DateTime(2028, 8,11),
-    DateTime(2028, 9,18),
-    DateTime(2028, 9,22),
-    DateTime(2028,10, 9),
-    DateTime(2028,11, 3),
-    DateTime(2028,11,23),
+    DateTime(2028, 7, 17),
+    DateTime(2028, 8, 11),
+    DateTime(2028, 9, 18),
+    DateTime(2028, 9, 22),
+    DateTime(2028, 10, 9),
+    DateTime(2028, 11, 3),
+    DateTime(2028, 11, 23),
     DateTime(2029, 1, 1),
     DateTime(2029, 1, 8),
-    DateTime(2029, 2,11),
-    DateTime(2029, 2,12),
-    DateTime(2029, 2,23),
-    DateTime(2029, 3,20),
-    DateTime(2029, 4,29),
-    DateTime(2029, 4,30),
+    DateTime(2029, 2, 11),
+    DateTime(2029, 2, 12),
+    DateTime(2029, 2, 23),
+    DateTime(2029, 3, 20),
+    DateTime(2029, 4, 29),
+    DateTime(2029, 4, 30),
     DateTime(2029, 5, 3),
     DateTime(2029, 5, 4),
     DateTime(2029, 5, 5),
-    DateTime(2029, 7,16),
-    DateTime(2029, 8,11),
-    DateTime(2029, 9,17),
-    DateTime(2029, 9,23),
-    DateTime(2029, 9,24),
-    DateTime(2029,10, 8),
-    DateTime(2029,11, 3),
-    DateTime(2029,11,23),
+    DateTime(2029, 7, 16),
+    DateTime(2029, 8, 11),
+    DateTime(2029, 9, 17),
+    DateTime(2029, 9, 23),
+    DateTime(2029, 9, 24),
+    DateTime(2029, 10, 8),
+    DateTime(2029, 11, 3),
+    DateTime(2029, 11, 23),
     DateTime(2030, 1, 1),
-    DateTime(2030, 1,14),
-    DateTime(2030, 2,11),
-    DateTime(2030, 2,23),
-    DateTime(2030, 3,20),
-    DateTime(2030, 4,29),
+    DateTime(2030, 1, 14),
+    DateTime(2030, 2, 11),
+    DateTime(2030, 2, 23),
+    DateTime(2030, 3, 20),
+    DateTime(2030, 4, 29),
     DateTime(2030, 5, 3),
     DateTime(2030, 5, 4),
     DateTime(2030, 5, 5),
     DateTime(2030, 5, 6),
-    DateTime(2030, 7,15),
-    DateTime(2030, 8,11),
-    DateTime(2030, 8,12),
-    DateTime(2030, 9,16),
-    DateTime(2030, 9,23),
-    DateTime(2030,10, 14),
-    DateTime(2030,11, 3),
-    DateTime(2030,11, 4),
-    DateTime(2030,11,23),
+    DateTime(2030, 7, 15),
+    DateTime(2030, 8, 11),
+    DateTime(2030, 8, 12),
+    DateTime(2030, 9, 16),
+    DateTime(2030, 9, 23),
+    DateTime(2030, 10, 14),
+    DateTime(2030, 11, 3),
+    DateTime(2030, 11, 4),
+    DateTime(2030, 11, 23),
   ];
 
   Color _getCellColor(DateTime date) {
     DateTime displayDate = _controller.displayDate!;
-    if (DateTime(date.year,date.month,1).isBefore(DateTime(displayDate.year,displayDate.month,displayDate.day))) {
+    if (DateTime(date.year, date.month, 1).isBefore(
+        DateTime(displayDate.year, displayDate.month, displayDate.day))) {
       return const Color(0xFFD6D6D6);
-    } else if (DateTime(date.year,date.month,1).isAfter(DateTime(displayDate.year,displayDate.month+1,0))){
+    } else if (DateTime(date.year, date.month, 1)
+        .isAfter(DateTime(displayDate.year, displayDate.month + 1, 0))) {
       return const Color(0xFFD6D6D6);
     } else {
-      if (holidays.contains(DateTime(date.year,date.month,date.day))) {
+      if (holidays.contains(DateTime(date.year, date.month, date.day))) {
         return Colors.red.shade100;
       } else {
         if (date.weekday == DateTime.sunday) {
@@ -1132,12 +1196,14 @@ class _EventIndexPageState extends State<EventIndexPage> {
 
   Color _getTextColor(DateTime date) {
     DateTime displayDate = _controller.displayDate!;
-    if (DateTime(date.year,date.month,1).isBefore(DateTime(displayDate.year,displayDate.month,displayDate.day))) {
+    if (DateTime(date.year, date.month, 1).isBefore(
+        DateTime(displayDate.year, displayDate.month, displayDate.day))) {
       return Colors.grey.shade600;
-    } else if (DateTime(date.year,date.month,1).isAfter(DateTime(displayDate.year,displayDate.month+1,0))){
+    } else if (DateTime(date.year, date.month, 1)
+        .isAfter(DateTime(displayDate.year, displayDate.month + 1, 0))) {
       return Colors.grey.shade600;
     } else {
-      if (holidays.contains(DateTime(date.year,date.month,date.day))) {
+      if (holidays.contains(DateTime(date.year, date.month, date.day))) {
         return Colors.red;
       } else {
         if (date.weekday == DateTime.sunday) {
@@ -1161,7 +1227,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
         return Colors.cyan.shade200;
       } else if (unit == 'Net班') {
         return Colors.amber.shade200;
-      } else if (unit == 'Grid班'){
+      } else if (unit == 'Grid班') {
         return Colors.lightGreen.shade200;
       } else if (unit == 'B4') {
         return Colors.teal.shade200;
@@ -1177,7 +1243,6 @@ class _EventIndexPageState extends State<EventIndexPage> {
     } else {
       return Colors.pink.shade200;
     }
-
   }
 
   Color _isTitleToColorBorder(String title, String unit) {
@@ -1190,7 +1255,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
         return Colors.cyan;
       } else if (unit == 'Net班') {
         return Colors.amber;
-      } else if (unit == 'Grid班'){
+      } else if (unit == 'Grid班') {
         return Colors.lightGreen.shade400;
       } else if (unit == 'B4') {
         return Colors.teal;
@@ -1206,29 +1271,32 @@ class _EventIndexPageState extends State<EventIndexPage> {
     } else {
       return Colors.pink.shade400;
     }
-
   }
 
   /// Check whether the appointment placed inside the timeslot on day, week
   /// and work week views.
   bool _isTimeslotAppointmentView(EventData app, CalendarView? view) {
     return (view == CalendarView.day ||
-        view == CalendarView.week ||
-        view == CalendarView.workWeek) &&
+            view == CalendarView.week ||
+            view == CalendarView.workWeek) &&
         app.end.difference(app.start).inDays < 1;
   }
+
   /// Check the date values are equal based on day, month and year.
   bool _isSameDate(DateTime date1, DateTime date2) {
     return date1.year == date2.year &&
         date1.month == date2.month &&
         date1.day == date2.day;
   }
+
   /// Check the appointment view is start of an appointment.
   bool _isStartOfAppointmentView(EventData app, DateTime date) {
     return _isSameDate(app.start, date);
   }
+
   /// Check the appointment view is end of an appointment.
-  bool _isEndOfAppointmentView(EventData app, DateTime date, CalendarView? view) {
+  bool _isEndOfAppointmentView(
+      EventData app, DateTime date, CalendarView? view) {
     if (view == CalendarView.month ||
         view == CalendarView.timelineWeek ||
         view == CalendarView.timelineWorkWeek ||
@@ -1245,12 +1313,17 @@ class _EventIndexPageState extends State<EventIndexPage> {
 
       /// Current week start date.
       final DateTime weekStartDate = date.add(Duration(days: value));
-      DateTime weekEndDate = weekStartDate.add(const Duration(days: DateTime.daysPerWeek - 1));
-      weekEndDate = DateTime(weekEndDate.year, weekEndDate.month, weekEndDate.day, 23, 59, 59);
+      DateTime weekEndDate =
+          weekStartDate.add(const Duration(days: DateTime.daysPerWeek - 1));
+      weekEndDate = DateTime(
+          weekEndDate.year, weekEndDate.month, weekEndDate.day, 23, 59, 59);
 
       /// Check the appointment end date is on or before the week end date.
-      return weekEndDate.isAfter(app.start) || _isSameDate(app.end, weekEndDate);
-    } else if (view == CalendarView.schedule || view == CalendarView.timelineDay || view == CalendarView.day) {
+      return weekEndDate.isAfter(app.start) ||
+          _isSameDate(app.end, weekEndDate);
+    } else if (view == CalendarView.schedule ||
+        view == CalendarView.timelineDay ||
+        view == CalendarView.day) {
       /// In calendar day, timeline day and schedule views
       /// are rendered based on each day, so we need to check the builder
       /// date value with appointment end date value for identify
@@ -1264,9 +1337,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
     }
     return false;
   }
-
 }
-
 
 /// An object to set the appointment collection data source to calendar, which
 /// used to map the custom appointment data to the calendar appointment, and
@@ -1283,25 +1354,20 @@ class EventDataSource extends CalendarDataSource {
     return _getEventData(index).id;
   }
 
-
   @override
   DateTime getStartTime(int index) {
     return _getEventData(index).start;
   }
-
 
   @override
   DateTime getEndTime(int index) {
     return _getEventData(index).end;
   }
 
-
   @override
   String getSubject(int index) {
     return _getEventData(index).title;
   }
-
-
 
   EventData _getEventData(int index) {
     final dynamic event = appointments![index];
@@ -1312,5 +1378,3 @@ class EventDataSource extends CalendarDataSource {
     return eventData;
   }
 }
-
-

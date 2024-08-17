@@ -14,15 +14,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Webプラットフォームの場合、Firebaseを初期化
-  if(kIsWeb) {
+  if (kIsWeb) {
     await Firebase.initializeApp(
         options: FirebaseOptions(
-          apiKey: Constants.apiKey,
-          appId: Constants.appId,
-          messagingSenderId: Constants.messagingSenderId,
-          projectId: Constants.projectId,
-        )
-    );
+      apiKey: Constants.apiKey,
+      appId: Constants.appId,
+      messagingSenderId: Constants.messagingSenderId,
+      projectId: Constants.projectId,
+    ));
   }
   // その他のプラットフォームの場合、デフォルトのFirebaseオプションを使用して初期化
   else {
@@ -51,10 +50,14 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('ja', ''), // 日本語
       ],
-      locale: const Locale('ja'), // デフォルトロケールを日本語に設定
-      title: 'Flutter Demo', // アプリのタイトル
-      debugShowCheckedModeBanner: false, // デバッグモードのバナーを非表示
-      theme: ThemeData.light(), // テーマをライトテーマに設定
+      locale: const Locale('ja'),
+      // デフォルトロケールを日本語に設定
+      title: 'Flutter Demo',
+      // アプリのタイトル
+      debugShowCheckedModeBanner: false,
+      // デバッグモードのバナーを非表示
+      theme: ThemeData.light(),
+      // テーマをライトテーマに設定
       scrollBehavior: const ScrollBehavior().copyWith(
         // スクロールデバイスの設定
         dragDevices: {
@@ -74,6 +77,12 @@ class MyApp extends StatelessWidget {
           // ユーザーが認証されている場合、フッターページを表示(ログイン維持機能)
           if (snapshot.hasData) {
             return const Footer(pageNumber: 0);
+            /*
+            return ResponsiveWidget(
+                mobileWidget:
+                webWidget: WebSideMenu(),
+            );
+            */
           }
           // ユーザーが認証されていない場合、ログインページを表示
           return const LoginPage();

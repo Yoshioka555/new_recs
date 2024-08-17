@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-import '../header_footer_drawer/drawer.dart';
 import 'event_create_model.dart';
+
+//変更点
+//新規作成
+//Web用にイベント追加ページを編集したもの
 
 class CreateEventPageWeb extends StatefulWidget {
   final bool withDuration;
@@ -54,6 +56,7 @@ class _CreateEventPageWebState extends State<CreateEventPageWeb> {
     return ChangeNotifierProvider<CreateEventModel>(
       create: (_) => CreateEventModel()..fetchUser(),
       child: Scaffold(
+        /*
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -68,6 +71,7 @@ class _CreateEventPageWebState extends State<CreateEventPageWeb> {
           ),
         ),
         drawer: const UserDrawer(),
+        */
         body: Consumer<CreateEventModel>(builder: (context, model, child) {
           return Padding(
             padding: const EdgeInsets.all(8.0),

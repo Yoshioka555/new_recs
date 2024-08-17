@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:labmaidfastapi/attendance/attendance_home_page.dart';
+import 'package:labmaidfastapi/member_location.dart';
 import 'package:labmaidfastapi/minutes/minutes_index_page.dart';
-
-import '../event/event_index_page.dart';
+import '../attendance/attendance_page_responsive.dart';
 import '../event/event_page_responsive.dart';
 import '../user/my_page.dart';
 
@@ -47,9 +46,9 @@ class _FooterState extends State<Footer> {
   ];
 
   final _routes = [
-    EventPageTop(),
-    const AttendanceHomePage(),
-    EventIndexPage(),
+    const EventPageTop(),
+    const AttendancePageTop(),
+    MemberLocation(),
     MinutesIndexPage(),
     const MyPage(),
   ];

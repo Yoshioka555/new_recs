@@ -7,6 +7,10 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:provider/provider.dart';
 import 'event_index_model.dart';
 
+//変更点
+//新規作成
+//Web用に編集したカレンダーウィジェット
+
 class EventIndexPageWeb extends StatefulWidget {
   const EventIndexPageWeb({Key? key}) : super(key: key);
 
@@ -235,7 +239,6 @@ class _EventIndexPageWebState extends State<EventIndexPageWeb> {
               ),
             ],
             */
-            backgroundColor: Colors.purple[50],
             elevation: 0.0,
             bottom: const TabBar(
               tabs: <Tab>[
