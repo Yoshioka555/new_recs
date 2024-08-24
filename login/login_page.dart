@@ -99,20 +99,22 @@ class LoginPage extends StatelessWidget {
                               SpringButtonType.WithOpacity,
                               Container(
                                 decoration: const BoxDecoration(
-                                  color: Colors.lightBlueAccent,
+                                  color: Color(0xFF40EA88),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20.0)),
                                 ),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    //変更点
-                                    Icon(Icons.login),
-                                    SizedBox(width: 10),
-                                    // Sign in with Apple のパクリ
-                                    Text('Sign in with Algorithm'),
-                                    SizedBox(width: 10),
-                                  ],
+                                child: FittedBox(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      //変更点
+                                      Icon(Icons.login),
+                                      SizedBox(width: 10),
+                                      // Sign in with Apple のパクリ
+                                      Text('Sign in with Algorithm'),
+                                      SizedBox(width: 10),
+                                    ],
+                                  ),
                                 ),
                               ),
                               onTapDown: (_) async {
@@ -229,7 +231,7 @@ class LoginPage extends StatelessWidget {
                               ),
                             );
                           },
-                          child: const Text('新規登録の方はこちら'),
+                          child: const Text('新規登録の方はこちら', style: TextStyle(color: Colors.black),),
                         ),
                         //iOS, Androidならば
                         TextButton(
@@ -243,7 +245,7 @@ class LoginPage extends StatelessWidget {
                               ),
                             );
                           },
-                          child: const Text('パスワードを忘れた場合はこちら'),
+                          child: const Text('パスワードを忘れた場合はこちら', style: TextStyle(color: Colors.black),),
                         ),
                       ],
                     ),

@@ -24,7 +24,7 @@ class MemberLocation extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ChatRoom()),
+                        builder: (context) => const GeminiChatPage()),
                   );
                 },
               ),

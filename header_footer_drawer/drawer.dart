@@ -9,6 +9,9 @@ import '../login/login_page.dart';
 import '../user/edit_user_page.dart';
 import 'drawer_model.dart';
 
+//変更点
+//Drawerのデザイン変更
+
 final Uri _homePageUrl = Uri.parse('https://al.kansai-u.ac.jp/');
 final Uri _poleManegeUrl = Uri.parse('https://p.al.kansai-u.ac.jp/');
 
@@ -31,6 +34,7 @@ class UserDrawer extends StatelessWidget {
               Container(
                 decoration: const BoxDecoration(
                     image: DecorationImage(
+                      //ここに背景画像をいれる
                   image: AssetImage('assets/images/flutter_haikei.png'),
                   fit: BoxFit.cover,
                 )),
@@ -96,10 +100,12 @@ class UserDrawer extends StatelessWidget {
                   ],
                 ),
               ),
+              //罫線
               const Divider(
                 height: 1,
                 thickness: 1,
               ),
+              //サブタイトル的なもの
               const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Text(
@@ -128,7 +134,7 @@ class UserDrawer extends StatelessWidget {
                         name: '吉岡',
                         group: 'Web班',
                         grade: 'M1',
-                        userImage:'',
+                        userImage: '',
                       );
                     }),
                   );
@@ -144,6 +150,9 @@ class UserDrawer extends StatelessWidget {
                   '外部リンク',
                 ),
               ),
+
+              //変更点
+              //外部ページに飛ぶ時に新しいタブが生成されるようになっています
               ListTile(
                 leading: const Icon(Icons.home),
                 title: const Text('研究室ホームページ'),
@@ -154,6 +163,7 @@ class UserDrawer extends StatelessWidget {
                 title: const Text('Pole Manege'),
                 onTap: () => _PolelaunchUrl(),
               ),
+
               const Divider(
                 height: 1,
                 thickness: 1,
@@ -172,33 +182,33 @@ class UserDrawer extends StatelessWidget {
                     showDialog(
                         context: context,
                         builder: (_) => CupertinoAlertDialog(
-                          title: const Text("ログアウトしますか？"),
-                          actions: [
-                            CupertinoDialogAction(
-                                isDestructiveAction: true,
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('Cancel')),
-                            CupertinoDialogAction(
-                              child: const Text('OK'),
-                              onPressed: () {
-                                FirebaseAuth.instance.signOut();
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(builder: (context) {
-                                    return const LoginPage();
-                                  }),
-                                );
-                                const snackBar = SnackBar(
-                                  backgroundColor: Colors.green,
-                                  content: Text('ログアウトしました'),
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              },
-                            )
-                          ],
-                        ));
+                              title: const Text("ログアウトしますか？"),
+                              actions: [
+                                CupertinoDialogAction(
+                                    isDestructiveAction: true,
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Cancel')),
+                                CupertinoDialogAction(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    FirebaseAuth.instance.signOut();
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) {
+                                        return const LoginPage();
+                                      }),
+                                    );
+                                    const snackBar = SnackBar(
+                                      backgroundColor: Colors.green,
+                                      content: Text('ログアウトしました'),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  },
+                                )
+                              ],
+                            ));
                   } catch (e) {
                     //失敗した場合
                     final snackBar = SnackBar(
@@ -272,12 +282,15 @@ class UserDrawer extends StatelessWidget {
   }
 }
 
+//変更点
+//研究室ホームページ
 Future<void> _HomelaunchUrl() async {
   if (!await launchUrl(_homePageUrl)) {
     throw Exception('Could not launch $_homePageUrl');
   }
 }
 
+//PoleManage
 Future<void> _PolelaunchUrl() async {
   if (!await launchUrl(_poleManegeUrl)) {
     throw Exception('Could not launch $_poleManegeUrl');

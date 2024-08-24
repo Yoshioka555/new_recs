@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labmaidfastapi/attendance/attendance_management_page_web.dart';
-import '../gemini/gemini_page.dart';
+import '../gemini/gemini_chat_page.dart';
 import '../header_footer_drawer/drawer.dart';
 import 'attendance_create_page_web.dart';
 import 'attendance_index_page_month.dart';
@@ -39,7 +39,7 @@ class AttendancePageWeb extends StatelessWidget {
               onPressed: () async {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const GeminiPage()),
+                  MaterialPageRoute(builder: (context) => const GeminiChatPage()),
                 );
               },
             ),

@@ -6,7 +6,7 @@ import 'package:labmaidfastapi/event/event_create_page.dart';
 import 'package:labmaidfastapi/event/event_update_page.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:provider/provider.dart';
-import '../gemini/gemini_page.dart';
+import '../gemini/gemini_chat_page.dart';
 import '../header_footer_drawer/drawer.dart';
 import 'event_index_model.dart';
 
@@ -234,7 +234,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const GeminiPage()),
+                          builder: (context) => const GeminiChatPage()),
                     );
                   },
                 ),

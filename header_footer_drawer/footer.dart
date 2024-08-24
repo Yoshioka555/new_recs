@@ -48,6 +48,8 @@ class _FooterState extends State<Footer> {
   final _routes = [
     const EventPageTop(),
     const AttendancePageTop(),
+    //変更点
+    //研究室の地図ページ
     MemberLocation(),
     MinutesIndexPage(),
     const MyPage(),

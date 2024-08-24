@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:labmaidfastapi/gemini/call_gemini.dart';
 
-class ChatRoom extends StatefulWidget {
-  const ChatRoom({Key? key}) : super(key: key);
+class GeminiChatPage extends StatefulWidget {
+  const GeminiChatPage({Key? key}) : super(key: key);
 
   @override
-  ChatRoomState createState() => ChatRoomState();
+  GeminiChatPageState createState() => GeminiChatPageState();
 }
 
-class ChatRoomState extends State<ChatRoom> {
+class GeminiChatPageState extends State<GeminiChatPage> {
   final List<types.Message> _messages = [];
 
   final _gemini = const types.User(
@@ -22,32 +23,43 @@ class ChatRoomState extends State<ChatRoom> {
     firstName: "User",
   );
 
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Gemini Chat Page'),
-        ),
-        body: Chat(
-          user: _user,
-          messages: _messages,
-          onSendPressed: _handleSendPressed,
-          //showUserAvatars: true,
-        ),
-      );
-
   void _addMessage(types.Message message) {
     setState(() {
       _messages.insert(0, message);
     });
   }
 
-  void _handleSendPressed(types.PartialText message) {
+  Future<void> _handleSendPressed(types.PartialText message) async {
     final textMessage = types.TextMessage(
       author: _user,
       //createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: 'randomstring',
+      id: DateTime.now().toString(),
       text: message.text,
     );
     _addMessage(textMessage);
+    final response = await callGemini(message.text);
+    final geminiResponse = types.TextMessage(
+      author: _gemini,
+      //createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: DateTime.now().toString(),
+      text: response,
+    );
+    _addMessage(geminiResponse);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Gemini Chat Page'),
+      ),
+      body: Chat(
+        user: _user,
+        messages: _messages,
+        onSendPressed: _handleSendPressed,
+        showUserNames: true,
+        //showUserAvatars: true,
+      ),
+    );
   }
 }

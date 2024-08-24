@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../attendance/attendance_management_page_web.dart';
-import '../gemini/gemini_page.dart';
+import '../gemini/gemini_chat_page.dart';
 import '../header_footer_drawer/drawer.dart';
 import 'event_create_page_web.dart';
 import 'event_index_page_web.dart';
@@ -36,7 +36,7 @@ class EventPageWeb extends StatelessWidget {
               onPressed: () async {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const GeminiPage()),
+                  MaterialPageRoute(builder: (context) => const GeminiChatPage()),
                 );
               },
             ),
