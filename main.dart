@@ -56,7 +56,12 @@ class MyApp extends StatelessWidget {
       // アプリのタイトル
       debugShowCheckedModeBanner: false,
       // デバッグモードのバナーを非表示
-      theme: ThemeData.light(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.white,
+        ),
+        useMaterial3: true,
+      ),
       // テーマをライトテーマに設定
       scrollBehavior: const ScrollBehavior().copyWith(
         // スクロールデバイスの設定

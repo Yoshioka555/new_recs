@@ -6,12 +6,12 @@ import 'email_reset_model.dart';
 
 class EmailResetPage extends StatefulWidget {
   const EmailResetPage({super.key});
+
   @override
   _EmailResetPageState createState() => _EmailResetPageState();
 }
 
 class _EmailResetPageState extends State<EmailResetPage> {
-
   bool _isObscure = true;
 
   @override
@@ -19,24 +19,17 @@ class _EmailResetPageState extends State<EmailResetPage> {
     return ChangeNotifierProvider<EmailResetModel>(
       create: (_) => EmailResetModel()..fetchEmailReset(),
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.lightGreen,
-          title: const Text('Email変更',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
+          title: const Text('Email変更'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.of(context).pop();
             },
-            color: Colors.white,
+            //color: Colors.white,
           ),
         ),
         body: Consumer<EmailResetModel>(builder: (context, model, child) {
-
           return Stack(
             children: [
               Center(
@@ -50,8 +43,8 @@ class _EmailResetPageState extends State<EmailResetPage> {
                           child: TextField(
                             controller: model.emailController,
                             decoration: const InputDecoration(
-                                labelText: 'Email　　※必要',
-                                icon: Icon(Icons.email),
+                              labelText: 'Email　　※必要',
+                              icon: Icon(Icons.email),
                             ),
                           ),
                         ),
@@ -70,15 +63,15 @@ class _EmailResetPageState extends State<EmailResetPage> {
                                 labelText: 'Password',
                                 icon: const Icon(Icons.lock),
                                 suffixIcon: IconButton(
-                                  icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
-
+                                  icon: Icon(_isObscure
+                                      ? Icons.visibility_off
+                                      : Icons.visibility),
                                   onPressed: () {
                                     setState(() {
                                       _isObscure = !_isObscure;
                                     });
                                   },
-                                )
-                            ),
+                                )),
                           ),
                         ),
                       ),
@@ -96,26 +89,29 @@ class _EmailResetPageState extends State<EmailResetPage> {
                               model.startLoading();
                               try {
                                 await model.updateUserEmail();
-
                                 FirebaseAuth.instance.signOut();
-                                Navigator.of(context).push(
+                                //スタック内のすべての画面を削除し、新しい画面に遷移
+                                Navigator.pushAndRemoveUntil(
+                                  context,
                                   MaterialPageRoute(
-                                      builder: (context) {
-                                        return const LoginPage();
-                                      }
-                                  ),
+                                      builder: (context) =>
+                                      const LoginPage()),
+                                      (route) => false,
                                 );
                                 const snackBar = SnackBar(
                                   backgroundColor: Colors.green,
-                                  content: Text('メールアドレスの変更確認のメールを新しいメールアドレスに送信しました。確認してください。'),
+                                  content: Text(
+                                      'メールアドレスの変更確認のメールを新しいメールアドレスに送信しました。確認してください。'),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
                               } catch (error) {
                                 final snackBar = SnackBar(
                                   backgroundColor: Colors.red,
                                   content: Text(error.toString()),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
                               } finally {
                                 model.endLoading();
                               }
@@ -134,5 +130,4 @@ class _EmailResetPageState extends State<EmailResetPage> {
       ),
     );
   }
-
 }

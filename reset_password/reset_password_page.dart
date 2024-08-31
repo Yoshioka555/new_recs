@@ -1,27 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:labmaidfastapi/login/login_page.dart';
 import 'package:provider/provider.dart';
 
 import 'reset_password_model.dart';
-
 
 //エラーを表示
 String? error;
 
 class ResetPasswordPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ResetPasswordModel>(
       create: (_) => ResetPasswordModel(),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: const Text('パスワードリセット',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
+          title: const Text('パスワードリセット'),
+          /*
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
@@ -29,8 +24,8 @@ class ResetPasswordPage extends StatelessWidget {
             },
             color: Colors.white,
           ),
+          */
         ),
-        backgroundColor: Colors.white,
         body: Consumer<ResetPasswordModel>(builder: (context, model, child) {
           return Stack(
             children: [
@@ -73,18 +68,21 @@ class ResetPasswordPage extends StatelessWidget {
                                   backgroundColor: Colors.blue,
                                   content: Text('${model.email}にメールを送信しました'),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                Navigator.of(context).pop();
-
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                                //現在の画面をナビゲーションスタックから取り除き、新しい画面をプッシュできる
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()),
+                                );
                               } on FirebaseAuthException catch (e) {
                                 //ユーザーログインに失敗した場合
                                 if (e.code == 'user-not-found') {
                                   error = 'ユーザーは存在しません';
-                                }
-                                else if (e.code == 'invalid-email') {
+                                } else if (e.code == 'invalid-email') {
                                   error = 'メールアドレスの形をしていません';
-                                }
-                                else {
+                                } else {
                                   error = 'メールを送信できません';
                                 }
 
@@ -92,7 +90,8 @@ class ResetPasswordPage extends StatelessWidget {
                                   backgroundColor: Colors.red,
                                   content: Text(error.toString()),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
                               } finally {
                                 model.endLoading();
                               }

@@ -11,7 +11,7 @@ class EventPageTop extends StatelessWidget {
   const EventPageTop({super.key});
   @override
   Widget build(BuildContext context) {
-    return ResponsiveWidget(
+    return const ResponsiveWidget(
       //従来通りのUI
       mobileWidget: EventIndexPage(),
       //Web用のUI

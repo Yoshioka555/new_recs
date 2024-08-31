@@ -57,6 +57,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
           elevation: 0,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           centerTitle: false,
+          /*
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -66,6 +67,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
               color: Color(0xff626262),
             ),
           ),
+          */
           title: const Text(
             "Create New Event",
             style: TextStyle(
@@ -582,7 +584,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                                   horizontal: 40,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xff6471e9),
+                                  color: Colors.green[300],
                                   borderRadius: BorderRadius.circular(7.0),
                                   boxShadow: const [
                                     BoxShadow(

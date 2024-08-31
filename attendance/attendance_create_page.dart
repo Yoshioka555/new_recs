@@ -63,6 +63,7 @@ class _CreateAttendancePageState extends State<CreateAttendancePage> {
           elevation: 0,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           centerTitle: false,
+          /*
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -72,6 +73,7 @@ class _CreateAttendancePageState extends State<CreateAttendancePage> {
               color: Color(0xff626262),
             ),
           ),
+          */
           title: const Text(
             "Create New Attendance",
             style: TextStyle(
@@ -388,7 +390,7 @@ class _CreateAttendancePageState extends State<CreateAttendancePage> {
                                   horizontal: 40,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xff6471e9),
+                                  color: Colors.blue[300],
                                   borderRadius: BorderRadius.circular(7.0),
                                   boxShadow: const [
                                     BoxShadow(

@@ -222,7 +222,6 @@ class _EventIndexPageState extends State<EventIndexPage> {
       child: ChangeNotifierProvider<EventIndexModel>(
         create: (_) => EventIndexModel()..fetchEvent(),
         child: Scaffold(
-          backgroundColor: Colors.white,
           appBar: AppBar(
             toolbarHeight: 50.0,
             actions: [
@@ -234,7 +233,8 @@ class _EventIndexPageState extends State<EventIndexPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const GeminiChatPage()),
+                        builder: (context) => const GeminiChatPage(),
+                      ),
                     );
                   },
                 ),
@@ -272,7 +272,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
           ),
           drawer: const UserDrawer(),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.amber,
+            backgroundColor: Colors.green[300],
             onPressed: () async {
               //画面遷移
               await Navigator.push(

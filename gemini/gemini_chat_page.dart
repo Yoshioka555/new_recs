@@ -52,8 +52,19 @@ class GeminiChatPageState extends State<GeminiChatPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Gemini Chat Page'),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+          ),
+        ),
       ),
       body: Chat(
+        theme: const DefaultChatTheme(
+          primaryColor: Colors.lightGreen,
+        ),
         user: _user,
         messages: _messages,
         onSendPressed: _handleSendPressed,

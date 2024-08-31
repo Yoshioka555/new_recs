@@ -27,14 +27,13 @@ class UserDrawer extends StatelessWidget {
     return ChangeNotifierProvider<DrawerModel>(
       create: (_) => DrawerModel()..fetchUserList(),
       child: Drawer(
-        backgroundColor: Colors.white,
         child: Consumer<DrawerModel>(builder: (context, model, child) {
           return ListView(
             children: [
               Container(
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                      //ここに背景画像をいれる
+                  //ここに背景画像をいれる
                   image: AssetImage('assets/images/flutter_haikei.png'),
                   fit: BoxFit.cover,
                 )),
@@ -194,10 +193,13 @@ class UserDrawer extends StatelessWidget {
                                   child: const Text('OK'),
                                   onPressed: () {
                                     FirebaseAuth.instance.signOut();
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) {
-                                        return const LoginPage();
-                                      }),
+                                    //スタック内のすべての画面を削除し、新しい画面に遷移
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginPage()),
+                                      (route) => false,
                                     );
                                     const snackBar = SnackBar(
                                       backgroundColor: Colors.green,

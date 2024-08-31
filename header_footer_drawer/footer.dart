@@ -6,8 +6,8 @@ import '../event/event_page_responsive.dart';
 import '../user/my_page.dart';
 
 class Footer extends StatefulWidget {
-
   final int pageNumber;
+
   const Footer({super.key, required this.pageNumber});
 
   @override
@@ -38,10 +38,11 @@ class _FooterState extends State<Footer> {
 
   //アイコンや文字列のカラー
   final List<Color?> _footerItemColor = [
-    Colors.purple[200],
+    //Colors.purple[200],
+    Colors.green[300],
+    Colors.blue[300],
     Colors.pinkAccent,
     Colors.orange,
-    Colors.blue,
     Colors.lightGreen,
   ];
 
@@ -50,7 +51,7 @@ class _FooterState extends State<Footer> {
     const AttendancePageTop(),
     //変更点
     //研究室の地図ページ
-    MemberLocation(),
+    const MemberLocation(),
     MinutesIndexPage(),
     const MyPage(),
   ];
@@ -59,11 +60,10 @@ class _FooterState extends State<Footer> {
   void initState() {
     _selectedIndex = widget.pageNumber;
     super.initState();
-    for ( var i =0; i < _footerItemNames.length; i++) {
-      if(_selectedIndex != i) {
+    for (var i = 0; i < _footerItemNames.length; i++) {
+      if (_selectedIndex != i) {
         _bottomNavigationBarItems.add(_UpdateDeactiveState(i));
-      }
-      else {
+      } else {
         _bottomNavigationBarItems.add(_UpdateActiveState(_selectedIndex));
       }
     }
@@ -77,7 +77,6 @@ class _FooterState extends State<Footer> {
         color: _footerItemColor[index],
       ),
       label: _footerItemNames[index],
-
     );
   }
 
@@ -94,7 +93,8 @@ class _FooterState extends State<Footer> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _bottomNavigationBarItems[_selectedIndex] = _UpdateDeactiveState(_selectedIndex);
+      _bottomNavigationBarItems[_selectedIndex] =
+          _UpdateDeactiveState(_selectedIndex);
       _bottomNavigationBarItems[index] = _UpdateActiveState(index);
       _selectedIndex = index;
     });
@@ -107,7 +107,8 @@ class _FooterState extends State<Footer> {
       child: Scaffold(
         body: _routes.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,  //これを書かないと３つまでしか表示されない
+          type: BottomNavigationBarType.fixed,
+          //これを書かないと３つまでしか表示されない
           items: _bottomNavigationBarItems,
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.black,

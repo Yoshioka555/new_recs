@@ -33,7 +33,8 @@ class _AttendanceHomePageState extends State<AttendanceHomePage> {
                 onPressed: () async {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const GeminiChatPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const GeminiChatPage()),
                   );
                 },
               ),
@@ -74,7 +75,7 @@ class _AttendanceHomePageState extends State<AttendanceHomePage> {
         ),
         drawer: const UserDrawer(),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.blue[200],
           onPressed: () async {
             //画面遷移
             await Navigator.push(
@@ -85,10 +86,7 @@ class _AttendanceHomePageState extends State<AttendanceHomePage> {
               ),
             );
           },
-          child: const Icon(
-            Icons.add,
-            color: Colors.black,
-          ),
+          child: const Icon(Icons.add),
         ),
         body: const TabBarView(
           children: [

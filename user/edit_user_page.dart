@@ -286,15 +286,17 @@ class _EditMyPageState extends State<EditMyPage> {
                                     _nameController.text,
                                     _groupController.text,
                                     _gradeController.text);
-
                                 if (imageData != null) {
                                   await model.updateImage(imageData);
                                 }
-                                //ユーザー登録
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(builder: (context) {
-                                    return const Footer(pageNumber: 3);
-                                  }),
+                                //ユーザー情報編集
+                                //スタック内のすべての画面を削除し、新しい画面に遷移
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                      const Footer(pageNumber: 0)),
+                                      (route) => false,
                                 );
                               } catch (error) {
                                 final snackBar = SnackBar(
