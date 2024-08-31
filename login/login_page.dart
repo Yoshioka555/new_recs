@@ -78,7 +78,6 @@ class LoginPage extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      /*
                       ConstrainedBox(
                         //横長の最大値の設定
                         constraints: const BoxConstraints(maxWidth: 250),
@@ -87,78 +86,7 @@ class LoginPage extends StatelessWidget {
                           width: MediaQuery.of(context).size.width * 0.5,
                           height: 40,
                           //変更点
-                          //弾むボタン
-
-                          child: SpringButton(
-                            SpringButtonType.WithOpacity,
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF40EA88),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0)),
-                              ),
-                              child: FittedBox(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    //変更点
-                                    Icon(Icons.login),
-                                    SizedBox(width: 10),
-                                    // Sign in with Apple のパクリ
-                                    Text('Sign in with Algorithm'),
-                                    SizedBox(width: 10),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            onTapDown: (_) async {
-                              model.startLoading();
-                              //追加の処理
-                              try {
-                                await model.login();
-                                //ユーザー登録
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const Footer(pageNumber: 0);
-                                    },
-                                  ),
-                                );
-                              } on FirebaseAuthException catch (e) {
-                                //ユーザーログインに失敗した場合
-                                if (e.code == 'user-not-found') {
-                                  error = 'ユーザーは存在しません';
-                                } else if (e.code == 'invalid-email') {
-                                  error = 'メールアドレスの形をしていません';
-                                } else if (e.code == 'wrong-password') {
-                                  error = 'パスワードが間違っています';
-                                } else {
-                                  error = 'ログインエラー';
-                                }
-
-                                final snackBar = SnackBar(
-                                  backgroundColor: Colors.red,
-                                  content: Text(error.toString()),
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              } finally {
-                                model.endLoading();
-                              }
-                            },
-                            onLongPress: null,
-                            onLongPressEnd: null,
-                          ),
-                        ),
-                      ),
-                      */
-                      ConstrainedBox(
-                        //横長の最大値の設定
-                        constraints: const BoxConstraints(maxWidth: 250),
-                        child: SizedBox(
-                          //横長がウィンドウサイズの３割になる設定
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          height: 40,
+                          //Googleのボタンになる
                           child: SignInButton(
                             Buttons.Google,
                             onPressed: () async {
@@ -170,7 +98,8 @@ class LoginPage extends StatelessWidget {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Footer(pageNumber: 0)),
+                                      builder: (context) =>
+                                          const Footer(pageNumber: 0)),
                                 );
                               } on FirebaseAuthException catch (e) {
                                 //ユーザーログインに失敗した場合
