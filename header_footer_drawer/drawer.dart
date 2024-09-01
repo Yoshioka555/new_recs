@@ -193,6 +193,7 @@ class UserDrawer extends StatelessWidget {
                                   child: const Text('OK'),
                                   onPressed: () {
                                     FirebaseAuth.instance.signOut();
+                                    //変更点
                                     //スタック内のすべての画面を削除し、新しい画面に遷移
                                     Navigator.pushAndRemoveUntil(
                                       context,
@@ -221,61 +222,6 @@ class UserDrawer extends StatelessWidget {
                   }
                 },
               ),
-              /*
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    showDialog(
-                        context: context,
-                        builder: (_) => CupertinoAlertDialog(
-                              title: const Text("ログアウトしますか？"),
-                              actions: [
-                                CupertinoDialogAction(
-                                    isDestructiveAction: true,
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Cancel')),
-                                CupertinoDialogAction(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    FirebaseAuth.instance.signOut();
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) {
-                                        return const LoginPage();
-                                      }),
-                                    );
-                                    const snackBar = SnackBar(
-                                      backgroundColor: Colors.green,
-                                      content: Text('ログアウトしました'),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  },
-                                )
-                              ],
-                            ));
-                  } catch (e) {
-                    //失敗した場合
-                    final snackBar = SnackBar(
-                      backgroundColor: Colors.red,
-                      content: Text(e.toString()),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  // 幅150、高さ50のボタン
-                  minimumSize: const Size(100, 50),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.logout),
-                    Text('Logout from ReCS/SEEM', style: TextStyle(fontSize: 18)),
-                  ],
-                ),
-              )
-              */
             ],
           );
         }),

@@ -70,6 +70,7 @@ class ResetPasswordPage extends StatelessWidget {
                                 );
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
+                                //変更点
                                 //現在の画面をナビゲーションスタックから取り除き、新しい画面をプッシュできる
                                 Navigator.pushReplacement(
                                   context,

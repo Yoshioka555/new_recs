@@ -90,6 +90,7 @@ class _EmailResetPageState extends State<EmailResetPage> {
                               try {
                                 await model.updateUserEmail();
                                 FirebaseAuth.instance.signOut();
+                                //変更点
                                 //スタック内のすべての画面を削除し、新しい画面に遷移
                                 Navigator.pushAndRemoveUntil(
                                   context,

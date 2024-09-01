@@ -289,6 +289,7 @@ class _EditMyPageState extends State<EditMyPage> {
                                 if (imageData != null) {
                                   await model.updateImage(imageData);
                                 }
+                                //変更点
                                 //ユーザー情報編集
                                 //スタック内のすべての画面を削除し、新しい画面に遷移
                                 Navigator.pushAndRemoveUntil(

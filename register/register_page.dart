@@ -317,7 +317,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               model.startLoading();
                               try {
                                 await model.signUp(imageData);
-                                //ユーザー登録
+                                //変更点
                                 //スタック内のすべての画面を削除し、新しい画面に遷移できる
                                 Navigator.pushAndRemoveUntil(
                                   context,
