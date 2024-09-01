@@ -58,9 +58,7 @@ class MyApp extends StatelessWidget {
       // デバッグモードのバナーを非表示
       //変更点
       //テーマを白にして、マテリアルデザイン３を適応しています
-      //これにより自動的にいい感じの色味にしてくれる
-      //eventPageは緑を基調に
-      //attendancePageは青を基調にしています
+      //テキストエラーや背景色を設定しなくても、自動的にいい感じの色味にしてくれる
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.white,
