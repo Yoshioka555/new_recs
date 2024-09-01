@@ -66,22 +66,6 @@ class _CreateAttendancePageWebState extends State<CreateAttendancePageWeb> {
     return ChangeNotifierProvider<CreateAttendanceModel>(
       create: (_) => CreateAttendanceModel()..fetchUser(),
       child: Scaffold(
-        /*
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          centerTitle: false,
-          title: const Text(
-            "Create New Attendance",
-            style: TextStyle(
-              color: Color(0xff626262),
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        drawer: const UserDrawer(),
-        */
         body: Consumer<CreateAttendanceModel>(builder: (context, model, child) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
