@@ -112,7 +112,6 @@ class LoginPage extends StatelessWidget {
                                 } else {
                                   error = 'ログインエラー';
                                 }
-
                                 final snackBar = SnackBar(
                                   backgroundColor: Colors.red,
                                   content: Text(error.toString()),
@@ -123,20 +122,6 @@ class LoginPage extends StatelessWidget {
                                 model.endLoading();
                               }
                             },
-                            /*
-                            child: const FittedBox(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.login),
-                                  SizedBox(width: 10),
-                                  // Sign in with Apple のパクリ
-                                  Text('Sign in with Algorithm'),
-                                  SizedBox(width: 10),
-                                ],
-                              ),
-                            ),
-                            */
                           ),
                         ),
                       ),
